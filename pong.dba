@@ -1,0 +1,57 @@
+sync rate 65
+sync on
+hide mouse
+
+load sound "hit.wav",1
+load sound "buzz.wav",2 
+
+y1=430
+y2=475
+yy1=430
+yy2=475
+thing1=4
+thing2=4
+ballx=300+rnd(50)
+bally=200+rnd(50)
+score1=0
+score2=0
+
+repeat
+print score1,"                                                             Hollographic Pong                                                            ", score2
+line 320,20,320,480
+ink rgb(rnd(255),rnd(255),rnd(255)),1
+rem ink rgb(rnd(255),rnd(255),rnd(255)),rgb(rnd(255),rnd(255),rnd(255))
+circle ballx,bally,5
+ballx=ballx+thing1
+bally=bally+thing2
+
+box 610,y1,625,y2
+box 15,yy1,30,yy2
+sync
+
+if upkey()=1 then y1=y1-12 : y2=y2-12
+cls
+if downkey()=1 then y1=y1+12 :  y2=y2+12
+cls
+
+if shiftkey()=1 then yy1=yy1-12 : yy2=yy2-12
+rem if upkey()=1 then yy1=yy1-12 : yy2=yy2-12
+cls
+
+if controlkey()=1 then yy1=yy1+12 :  yy2=yy2+12
+rem if downkey()=1 then yy1=yy1+12 :  yy2=yy2+12
+cls
+if ballx<=0 then ballx=300+rnd(50) : bally=200+rnd(50) : score2=score2+1 : play sound 2
+if bally<=0 then thing2=4
+if bally>=480 then thing2=-4
+if ballx>=640 then ballx=300+rnd(50) : bally=200+rnd(50) : score1=score1+1 : play sound 2
+if bally<=(y2+4) & bally>=(y1-4) & ballx>=610 & ballx<=615 then thing1=-4 : play sound 1
+if bally<=(yy2+4) & bally>=(yy1-4) & ballx>=15 & ballx<=30 then thing1=4 : play sound 1
+
+if y1<0 then y1=1 : y2=46
+if yy1<0 then yy1=1 : yy2=46
+
+if y2>480 then y1=480-46 : y2=479
+if yy2>480 then yy1=480-46 : yy2=479
+
+until spacekey()=1
